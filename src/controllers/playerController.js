@@ -1,8 +1,8 @@
 const axios = require('axios');
-const Player = require('../models/player'); // Ajuste o nome para "player" se necessário
+const Player = require('../models/player'); 
 
 const getPlayerData = async (req, res) => {
-  const { nickname } = req.params; // O "nickname" aqui deve ser a tag do jogador
+  const { nickname } = req.params; 
   try {
     const formattedTag = nickname.replace('#', '%23');
 
@@ -18,12 +18,12 @@ const getPlayerData = async (req, res) => {
       nickname: playerData.name,
       expLevel: playerData.expLevel,
       trophies: playerData.trophies,
-      playTime: playerData.playTime || 0, // Se playTime não estiver presente, defina como 0
+      playTime: playerData.playTime || 0, 
       clan: playerData.clan ? playerData.clan.name : null,
       
     });    
 
-    console.log(playerData); // Adicione esta linha para verificar a resposta completa
+    console.log(playerData); 
 
     await player.save();
     res.status(200).json(player);

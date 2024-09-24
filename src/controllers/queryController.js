@@ -25,20 +25,24 @@ const getWinningDecks = async (req, res) => {
     const battles = await Battle.find({
       timestamp: { $gte: new Date(startTime), $lte: new Date(endTime) },
     });
+
     const deckWins = {};
     battles.forEach(battle => {
-      const deck = battle.winnerDeck.join(',');
-      if (!deckWins[deck]) deckWins[deck] = 0;
-      deckWins[deck]++;
+      if (battle.winnerDeck && Array.isArray(battle.winnerDeck)) {
+        const deck = battle.winnerDeck.join(',');
+        if (!deckWins[deck]) deckWins[deck] = 0;
+        deckWins[deck]++;
+      }
     });
+
     const totalBattles = battles.length;
     const winningDecks = Object.keys(deckWins).filter(deck => (deckWins[deck] / totalBattles) * 100 > winRate);
+
     res.status(200).json(winningDecks);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
-
 // 3. Calcule a quantidade de derrotas utilizando o combo de cartas
 const getLossesByCardCombo = async (req, res) => {
   const { cards, startTime, endTime } = req.query;
@@ -113,6 +117,8 @@ const getWinsByCardWithConditions = async (req, res) => {
     f([], deck);
     return results;
   };
+
+  // 6 - Médias de Troféus
   
   const getAverageTrophies = async (req, res) => {
     const { startTime, endTime } = req.query;
@@ -127,6 +133,8 @@ const getWinsByCardWithConditions = async (req, res) => {
       res.status(500).json({ error: error.message });
     }
   };
+
+  // 7 - Jogadores por Vitórias
 
   const getTopPlayersByWins = async (req, res) => {
     const { startTime, endTime } = req.query;
@@ -146,6 +154,8 @@ const getWinsByCardWithConditions = async (req, res) => {
       res.status(500).json({ error: error.message });
     }
   };
+
+  // 8 - Porcentagem de Vitórias por Nível
 
   const getWinPercentageByLevel = async (req, res) => {
     const { level, startTime, endTime } = req.query;
@@ -173,4 +183,3 @@ const getWinsByCardWithConditions = async (req, res) => {
     getTopPlayersByWins,
     getWinPercentageByLevel
   };
-  

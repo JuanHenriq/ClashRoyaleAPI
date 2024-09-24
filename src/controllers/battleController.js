@@ -12,15 +12,14 @@ const getBattleData = async (req, res) => {
     const battles = [];
 
     for (const battle of response.data.items) {
-      // Obter dados do jogador 1
       const player1Tag = battle.team[0].tag;
       const player1Data = await getPlayerData(player1Tag);
 
-      // Obter dados do jogador 2
       const player2Tag = battle.opponent[0].tag;
       const player2Data = await getPlayerData(player2Tag);
 
-      // Criar objeto de batalha
+      const winnerDeck = battle.team[0].crowns > battle.opponent[0].crowns ? battle.team[0].cards.map(card => card.name) : battle.opponent[0].cards.map(card => card.name);
+
       battles.push({
         timestamp: new Date(battle.battleTime),
         player1: player1Data.tag,
@@ -32,9 +31,9 @@ const getBattleData = async (req, res) => {
         player2Deck: battle.opponent[0].cards.map(card => card.name),
         player1Trophies: battle.team[0].startingTrophies,
         player2Trophies: battle.opponent[0].startingTrophies,
+        winnerDeck: winnerDeck // Adicione esta linha
       });
 
-      // Salvar dados dos jogadores
       await savePlayerData(player1Data);
       await savePlayerData(player2Data);
     }

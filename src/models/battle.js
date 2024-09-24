@@ -11,6 +11,7 @@ const battleSchema = new mongoose.Schema({
   player2Deck: { type: [String], required: true },
   player1Trophies: { type: Number, required: true },
   player2Trophies: { type: Number, required: true },
+  winnerDeck: { type: [String], required: true }
 });
 
 module.exports = mongoose.model('Battle', battleSchema);
