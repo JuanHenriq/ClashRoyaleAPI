@@ -31,7 +31,7 @@ const getBattleData = async (req, res) => {
         player2Deck: battle.opponent[0].cards.map(card => card.name),
         player1Trophies: battle.team[0].startingTrophies,
         player2Trophies: battle.opponent[0].startingTrophies,
-        winnerDeck: winnerDeck // Adicione esta linha
+        winnerDeck: winnerDeck 
       });
 
       await savePlayerData(player1Data);

@@ -16,10 +16,8 @@ const router = express.Router();
 // Rota para adicionar batalhas e depois realizar consultas
 router.post('/update-and-query', async (req, res) => {
   try {
-    // Primeiro, adiciona as batalhas
     await addBattles(req, res);
 
-    // Depois, realiza as consultas
     const { queryType, ...queryParams } = req.query;
 
     switch (queryType) {
