@@ -34,13 +34,13 @@
     "winnerDeck": ["Card1", "Card2", "Card3"]
   }
 
+### Observação:
+
+Utilizar o postman para as consultas (METHOD GET) e a inserção dos dados (METHOD POST)
+
 ## Alunos:
 
 Débora Freitas
 João Pedro Brito
 Juan Henrique
 Yago Xavier
-
-### Observação:
-
-Utilizar o postman para as consultas (METHOD GET) e a inserção dos dados (METHOD POST)
